@@ -7,10 +7,19 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CitiesActivity extends AppCompatActivity {
+
+    private NestedScrollView nestedScrollView;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +28,30 @@ public class CitiesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        //nestedScrollView = (NestedScrollView) findViewById(R.id.content_layout);
+        listView = (ListView) findViewById(R.id.list_view);
+
+        List<String> your_array_list = new ArrayList<String>();
+        your_array_list.add("Athens");
+        your_array_list.add("Paris");
+        your_array_list.add("St. Louis");
+        your_array_list.add("London");
+        your_array_list.add("Stockholm");
+        your_array_list.add("Berlin");
+        your_array_list.add("Antwerp");
+        your_array_list.add("Chamonix");
+        your_array_list.add("St. Moritz");
+        your_array_list.add("Amsterdam");
+        your_array_list.add("Los Angeles");
+        your_array_list.add("Oslo");
+        your_array_list.add("Helsinki");
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                your_array_list );
+
+        listView.setAdapter(arrayAdapter);
+
     }
 }
