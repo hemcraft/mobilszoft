@@ -27,7 +27,6 @@ licenses:
 
 before-script:
     - mkdir -p "$ANDROID_HOME/licenses"
-    - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
     - echo no | android create avd --force -n test -t android-21--abi armeabi-v7a-s "768x1280"
     - emulator -avd test -no-audio -no-window &
     - adb wait-for-device
