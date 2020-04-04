@@ -29,3 +29,7 @@ licenses:
 before-script:
     - mkdir -p "$ANDROID_HOME/licenses"
    
+
+
+script:
+ - chmod +x ./gradlew build connectedCheck
