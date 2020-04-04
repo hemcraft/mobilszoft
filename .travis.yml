@@ -45,4 +45,4 @@ before-install:
 
 script:
   - android list targets
-  - ./gradlew connectedAndroidTest
+  - ./gradlew :app:build
