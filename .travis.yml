@@ -1,5 +1,6 @@
 language: android
 dist: trusty
+os: windows
 android:
     components:
         - build-tools-25.0.2
