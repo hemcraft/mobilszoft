@@ -16,7 +16,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CitiesActivity extends AppCompatActivity {
+public class CitiesActivity extends AppCompatActivity implements CitiesView {
 
     private NestedScrollView nestedScrollView;
     private ListView listView;
@@ -28,7 +28,6 @@ public class CitiesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //nestedScrollView = (NestedScrollView) findViewById(R.id.content_layout);
         listView = (ListView) findViewById(R.id.list_view);
 
         List<String> your_array_list = new ArrayList<String>();
@@ -52,6 +51,31 @@ public class CitiesActivity extends AppCompatActivity {
                 your_array_list );
 
         listView.setAdapter(arrayAdapter);
+
+    }
+
+    @Override
+    public void downloadCities() {
+
+    }
+
+    @Override
+    public void saveCities() {
+
+    }
+
+    @Override
+    public void showCities() {
+
+    }
+
+    @Override
+    public void sendNotification() {
+
+    }
+
+    @Override
+    public void calculateDistances() {
 
     }
 }
