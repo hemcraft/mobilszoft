@@ -95,16 +95,6 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
     }
 
     @Override
-    public void downloadCities() {
-
-    }
-
-    @Override
-    public void saveCities() {
-
-    }
-
-    @Override
     public void showCities(List<City> cityList) {
         List<String> cityArrayList = new ArrayList<String>();
         ArrayList<ListElementCity> cityElementArrayList = new ArrayList<>();
@@ -126,11 +116,6 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
         CustomAdapter customAdapter = new CustomAdapter(this, cityElementArrayList);
 
         listView.setAdapter(customAdapter);
-    }
-
-    @Override
-    public void sendNotification() {
-
     }
 
     @Override

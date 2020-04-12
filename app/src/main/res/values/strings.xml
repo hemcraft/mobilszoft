@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">mobilszoft</string>
+    <string name="app_name">Olympics</string>
     <string name="title_activity_cities">CitiesActivity</string>
     <string name="large_text">
         "All rights reserved\n"
