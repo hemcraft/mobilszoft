@@ -2,6 +2,7 @@ package com.example.mobilszoft;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -12,11 +13,14 @@ import com.example.mobilszoft.distance.LatLongDistance;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -46,6 +50,7 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
         setSupportActionBar(toolbar);
 
         listView = (ListView) findViewById(R.id.list_view);
+        //listView.setsiz
         latLongDistance = new LatLongDistance();
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -59,6 +64,24 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
             selfLongitude = location.getLongitude();
             selfLatitude = location.getLatitude();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if( id == R.id.about){
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        }
+
+        return true;
     }
 
     @Override

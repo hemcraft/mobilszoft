@@ -2,8 +2,12 @@
     <string name="app_name">mobilszoft</string>
     <string name="title_activity_cities">CitiesActivity</string>
     <string name="large_text">
-        "All rights reserved.\n\n"
+        "All rights reserved\n"
+        "www.olympic.org \n\n"
         "2020"
+    </string>
+    <string name="summary_text">
+        2032 Summer Olympics
     </string>
     <string name="action_settings">Settings</string>
 </resources>

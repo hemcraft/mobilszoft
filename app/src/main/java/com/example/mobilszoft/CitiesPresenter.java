@@ -1,5 +1,6 @@
 package com.example.mobilszoft;
 
+import android.os.Debug;
 import android.os.Handler;
 import android.util.Log;
 
@@ -22,11 +23,12 @@ public class CitiesPresenter implements CitiesInteractor.OnSaveFinishedListener{
     CitiesPresenter(CitiesView citiesView, CitiesInteractor citiesInteractor){
         this.citiesView = citiesView;
         this.citiesInteractor = citiesInteractor;
-        //City.deleteAll(City.class);
+        City.deleteAll(City.class);
 
         Callback<com.example.mobilszoft.network.City> cityCallback = new Callback<com.example.mobilszoft.network.City>() {
             @Override
             public void onResponse(Call<com.example.mobilszoft.network.City> call, Response<com.example.mobilszoft.network.City> response) {
+                Log.v("city", "ERROR ERROR ERROR " + response.body().getPlaces().get(0).getPlaceName());
                 City cityDB = new City(
                         response.body().getPlaces().get(0).getPlaceName(),
                         response.body().getCountry(),
@@ -64,6 +66,9 @@ public class CitiesPresenter implements CitiesInteractor.OnSaveFinishedListener{
         cityApi.getCity("us", "00210").enqueue(cityCallback);
         cityApi.getCity("pl", "00-001").enqueue(cityCallback);
         cityApi.getCity("mx", "01000").enqueue(cityCallback);
+        cityApi.getCity("at", "1010").enqueue(cityCallback);
+        cityApi.getCity("es", "01001").enqueue(cityCallback);
+        cityApi.getCity("jp", "100-0001").enqueue(cityCallback);
     }
 
     public void saveCity(City city){
