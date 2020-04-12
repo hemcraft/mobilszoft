@@ -10,6 +10,8 @@ import android.os.Bundle;
 
 import com.example.mobilszoft.db.City;
 import com.example.mobilszoft.distance.LatLongDistance;
+import com.example.mobilszoft.model.CustomAdapter;
+import com.example.mobilszoft.model.ListElementCity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -24,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -81,6 +84,13 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
             startActivity(intent);
         }
 
+        if( id == R.id.refresh){
+            presenter.reloadCities();
+            Toast toast = Toast.makeText(getApplicationContext(), "Cities reloaded", Toast.LENGTH_SHORT);
+            toast.show();
+
+        }
+
         return true;
     }
 
@@ -97,29 +107,45 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
     @Override
     public void showCities(List<City> cityList) {
         List<String> cityArrayList = new ArrayList<String>();
+        ArrayList<ListElementCity> cityElementArrayList = new ArrayList<>();
 
         for (City city: cityList
              ) {
             BigDecimal value = new BigDecimal(calculateDistances(city.getLatitude(), city.getLongitude()));
             value.setScale(2, RoundingMode.CEILING);
 
-            String cityString = city.getName()
-                    + ": "
-                    + city.getCountry()
-                    + "                                                       "
-                    + "Distance:   "
-                    + value.round(MathContext.DECIMAL32)
-                    + "KM";
-            cityArrayList.add(cityString);
+            ListElementCity listElementCity = new ListElementCity();
+            listElementCity.setName(city.getName());
+            listElementCity.setCountry(city.getCountry());
+            listElementCity.setDistance(value.round(MathContext.DECIMAL32));
+            listElementCity.setImage(selectCountryImage(city.getCountry()));
+
+            cityElementArrayList.add(listElementCity);
         }
 
+        CustomAdapter customAdapter = new CustomAdapter(this, cityElementArrayList);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                cityArrayList );
+        listView.setAdapter(customAdapter);
+    }
 
-        listView.setAdapter(arrayAdapter);
+    private int selectCountryImage(String country){
+        int ret = 0;
+
+        switch(country) {
+            case "United States":
+                // code block
+                ret = R.drawable.us;
+                break;
+            case "Hungary":
+                // code block
+                ret = R.drawable.hu;
+                break;
+            default:
+                ret = R.drawable.hu;
+                // code block
+        }
+
+        return ret;
     }
 
     @Override
