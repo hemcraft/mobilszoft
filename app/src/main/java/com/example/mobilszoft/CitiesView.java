@@ -1,14 +1,18 @@
 package com.example.mobilszoft;
 
+import com.example.mobilszoft.db.City;
+
+import java.util.List;
+
 public interface CitiesView {
 
     void downloadCities();
 
     void saveCities();
 
-    void showCities();
+    void showCities(List<City> cityList);
 
     void sendNotification();
 
-    void calculateDistances();
+    Double calculateDistances(Double latitude, Double longitude);
 }
