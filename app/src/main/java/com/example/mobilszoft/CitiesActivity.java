@@ -120,7 +120,7 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
 
     @Override
     public Double calculateDistances(Double latitude, Double longitude) {
-        return latLongDistance.distance(latitude, longitude, selfLongitude, selfLatitude);
+        return latLongDistance.calculateDistance(selfLatitude, selfLongitude, latitude, longitude);
     }
 
     private int selectCountryImage(String country){
