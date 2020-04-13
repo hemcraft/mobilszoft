@@ -77,7 +77,7 @@ public class CitiesPresenter implements CitiesInteractor.OnSaveFinishedListener{
         //API REQUESTS
         CityApi cityApi = retrofit.create(CityApi.class);
         cityApi.getCity("hu", "1021").enqueue(cityCallback);
-        cityApi.getCity("de", "01067").enqueue(cityCallback);
+        cityApi.getCity("de", "10115").enqueue(cityCallback);
         cityApi.getCity("no", "0001").enqueue(cityCallback);
         cityApi.getCity("in", "110001").enqueue(cityCallback);
         cityApi.getCity("ru", "101000").enqueue(cityCallback);
