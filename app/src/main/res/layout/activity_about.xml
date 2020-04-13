@@ -7,19 +7,41 @@
     android:orientation="vertical"
     tools:context=".AboutActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="About"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="294dp"
-        app:srcCompat="@android:drawable/ic_menu_info_details"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/olympic_logo"
         tools:layout_editor_absoluteX="74dp"
         tools:layout_editor_absoluteY="71dp" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="173dp"
-        android:layout_height="87dp"
+        android:layout_width="match_parent"
+        android:layout_height="217dp"
+        android:gravity="center"
         android:text="@string/large_text"
+        android:textSize="18dp"
         tools:layout_editor_absoluteX="119dp"
         tools:layout_editor_absoluteY="342dp" />
+
 </LinearLayout>

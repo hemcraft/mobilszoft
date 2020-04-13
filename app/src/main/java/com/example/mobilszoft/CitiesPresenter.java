@@ -1,5 +1,6 @@
 package com.example.mobilszoft;
 
+import android.os.Debug;
 import android.os.Handler;
 import android.util.Log;
 
@@ -19,14 +20,17 @@ public class CitiesPresenter implements CitiesInteractor.OnSaveFinishedListener{
     private CitiesView citiesView;
     private CitiesInteractor citiesInteractor;
 
-    CitiesPresenter(CitiesView citiesView, CitiesInteractor citiesInteractor){
+    private Callback<com.example.mobilszoft.network.City> cityCallback;
+    private Retrofit retrofit;
+
+    public CitiesPresenter(CitiesView citiesView, CitiesInteractor citiesInteractor){
         this.citiesView = citiesView;
         this.citiesInteractor = citiesInteractor;
-        //City.deleteAll(City.class);
 
-        Callback<com.example.mobilszoft.network.City> cityCallback = new Callback<com.example.mobilszoft.network.City>() {
+        cityCallback = new Callback<com.example.mobilszoft.network.City>() {
             @Override
             public void onResponse(Call<com.example.mobilszoft.network.City> call, Response<com.example.mobilszoft.network.City> response) {
+                Log.v("city", "ERROR ERROR ERROR " + response.body().getPlaces().get(0).getPlaceName());
                 City cityDB = new City(
                         response.body().getPlaces().get(0).getPlaceName(),
                         response.body().getCountry(),
@@ -46,11 +50,30 @@ public class CitiesPresenter implements CitiesInteractor.OnSaveFinishedListener{
             }
         };
 
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.zippopotam.us/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        requestCities();
+
+    }
+
+    public void saveCity(City city){
+        citiesInteractor.saveCityToDatabase(city);
+    }
+
+    public List<City> getCities() {
+        return citiesInteractor.getCitiesFromDatabase();
+    }
+
+    public void reloadCities(){
+        //Clear Database
+        deleteCities();
+        requestCities();
+    }
+
+    private void requestCities(){
         //API REQUESTS
         CityApi cityApi = retrofit.create(CityApi.class);
         cityApi.getCity("hu", "1021").enqueue(cityCallback);
@@ -64,16 +87,14 @@ public class CitiesPresenter implements CitiesInteractor.OnSaveFinishedListener{
         cityApi.getCity("us", "00210").enqueue(cityCallback);
         cityApi.getCity("pl", "00-001").enqueue(cityCallback);
         cityApi.getCity("mx", "01000").enqueue(cityCallback);
+        cityApi.getCity("at", "1010").enqueue(cityCallback);
+        cityApi.getCity("es", "01001").enqueue(cityCallback);
+        cityApi.getCity("jp", "100-0001").enqueue(cityCallback);
     }
 
-    public void saveCity(City city){
-        citiesInteractor.saveCityToDatabase(city);
+    public void deleteCities() {
+        citiesInteractor.clearDatabase();
     }
-
-    public List<City> getCities() {
-        return citiesInteractor.getCitiesFromDatabase();
-    }
-
 
     @Override
     public void onSuccess() {

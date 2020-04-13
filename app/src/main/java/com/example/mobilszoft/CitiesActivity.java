@@ -2,6 +2,7 @@ package com.example.mobilszoft;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -9,17 +10,23 @@ import android.os.Bundle;
 
 import com.example.mobilszoft.db.City;
 import com.example.mobilszoft.distance.LatLongDistance;
+import com.example.mobilszoft.model.CustomAdapter;
+import com.example.mobilszoft.model.ListElementCity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -46,6 +53,7 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
         setSupportActionBar(toolbar);
 
         listView = (ListView) findViewById(R.id.list_view);
+        //listView.setsiz
         latLongDistance = new LatLongDistance();
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -62,50 +70,116 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
     }
 
     @Override
-    public void downloadCities() {
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
     }
 
     @Override
-    public void saveCities() {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
 
+        if( id == R.id.about){
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        }
+
+        if( id == R.id.refresh){
+            presenter.reloadCities();
+            Toast toast = Toast.makeText(getApplicationContext(), "Cities reloaded", Toast.LENGTH_SHORT);
+            toast.show();
+
+        }
+
+        return true;
     }
 
     @Override
     public void showCities(List<City> cityList) {
-        List<String> cityArrayList = new ArrayList<String>();
+        //List<String> cityArrayList = new ArrayList<String>();
+        ArrayList<ListElementCity> cityElementArrayList = new ArrayList<>();
 
         for (City city: cityList
              ) {
             BigDecimal value = new BigDecimal(calculateDistances(city.getLatitude(), city.getLongitude()));
             value.setScale(2, RoundingMode.CEILING);
 
-            String cityString = city.getName()
-                    + ": "
-                    + city.getCountry()
-                    + "                                                       "
-                    + "Distance:   "
-                    + value.round(MathContext.DECIMAL32)
-                    + "KM";
-            cityArrayList.add(cityString);
+            ListElementCity listElementCity = new ListElementCity();
+            listElementCity.setName(city.getName());
+            listElementCity.setCountry(city.getCountry());
+            listElementCity.setDistance(value.round(MathContext.DECIMAL32));
+            listElementCity.setImage(selectCountryImage(city.getCountry()));
+
+            cityElementArrayList.add(listElementCity);
         }
 
+        CustomAdapter customAdapter = new CustomAdapter(this, cityElementArrayList);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                cityArrayList );
-
-        listView.setAdapter(arrayAdapter);
-    }
-
-    @Override
-    public void sendNotification() {
-
+        listView.setAdapter(customAdapter);
     }
 
     @Override
     public Double calculateDistances(Double latitude, Double longitude) {
         return latLongDistance.distance(latitude, longitude, selfLongitude, selfLatitude);
+    }
+
+    private int selectCountryImage(String country){
+        int ret = 0;
+
+        switch(country) {
+            case "United States":
+                // code block
+                ret = R.drawable.us;
+                break;
+            case "Hungary":
+                // code block
+                ret = R.drawable.hu;
+                break;
+            case "Norway":
+                // code block
+                ret = R.drawable.no;
+                break;
+            case "Germany":
+                // code block
+                ret = R.drawable.de;
+                break;
+            case "Russia":
+                // code block
+                ret = R.drawable.ru;
+                break;
+            case "India":
+                // code block
+                ret = R.drawable.in;
+                break;
+            case "Netherlands":
+                // code block
+                ret = R.drawable.ne;
+                break;
+            case "Mexico":
+                // code block
+                ret = R.drawable.mx;
+                break;
+            case "Austria":
+                // code block
+                ret = R.drawable.at;
+                break;
+            case "Spain":
+                // code block
+                ret = R.drawable.es;
+                break;
+            case "Japan":
+                // code block
+                ret = R.drawable.ja;
+                break;
+            case "Poland":
+                // code block
+                ret = R.drawable.pl;
+                break;
+            default:
+                ret = R.drawable.hu;
+                // code block
+        }
+
+        return ret;
     }
 }
