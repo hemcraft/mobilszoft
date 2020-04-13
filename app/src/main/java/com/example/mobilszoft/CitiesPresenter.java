@@ -23,7 +23,7 @@ public class CitiesPresenter implements CitiesInteractor.OnSaveFinishedListener{
     private Callback<com.example.mobilszoft.network.City> cityCallback;
     private Retrofit retrofit;
 
-    CitiesPresenter(CitiesView citiesView, CitiesInteractor citiesInteractor){
+    public CitiesPresenter(CitiesView citiesView, CitiesInteractor citiesInteractor){
         this.citiesView = citiesView;
         this.citiesInteractor = citiesInteractor;
 

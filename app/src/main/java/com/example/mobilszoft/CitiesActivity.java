@@ -96,7 +96,7 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
 
     @Override
     public void showCities(List<City> cityList) {
-        List<String> cityArrayList = new ArrayList<String>();
+        //List<String> cityArrayList = new ArrayList<String>();
         ArrayList<ListElementCity> cityElementArrayList = new ArrayList<>();
 
         for (City city: cityList
