@@ -4,7 +4,8 @@
 
     <item
         android:title="About"
-        android:id="@+id/about" />
+        android:id="@+id/about"
+        android:name="about"/>
 
     <item
         android:title="Refresh"

@@ -50,13 +50,8 @@ public class CitiesPresenter implements CitiesInteractor.OnSaveFinishedListener{
             }
         };
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.zippopotam.us/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        requestCities();
-
+        setUpRetrofit();
+        downloadCities();
     }
 
     public void saveCity(City city){
@@ -70,10 +65,10 @@ public class CitiesPresenter implements CitiesInteractor.OnSaveFinishedListener{
     public void reloadCities(){
         //Clear Database
         deleteCities();
-        requestCities();
+        downloadCities();
     }
 
-    private void requestCities(){
+    private void downloadCities(){
         //API REQUESTS
         CityApi cityApi = retrofit.create(CityApi.class);
         cityApi.getCity("hu", "1021").enqueue(cityCallback);
@@ -94,6 +89,13 @@ public class CitiesPresenter implements CitiesInteractor.OnSaveFinishedListener{
 
     public void deleteCities() {
         citiesInteractor.clearDatabase();
+    }
+
+    private void setUpRetrofit(){
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.zippopotam.us/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     @Override
