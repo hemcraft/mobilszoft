@@ -9,22 +9,20 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import com.example.mobilszoft.db.City;
+import com.example.mobilszoft.distance.DaggerLatLongDistanceComponent;
 import com.example.mobilszoft.distance.LatLongDistance;
+import com.example.mobilszoft.distance.LatLongDistanceComponent;
 import com.example.mobilszoft.model.CustomAdapter;
 import com.example.mobilszoft.model.ListElementCity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.mobilszoft.selector.CountrySelector;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.widget.NestedScrollView;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,7 +34,6 @@ import java.util.List;
 
 public class CitiesActivity extends AppCompatActivity implements CitiesView {
 
-    private NestedScrollView nestedScrollView;
     private ListView listView;
 
     private LatLongDistance latLongDistance;
@@ -53,8 +50,9 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
         setSupportActionBar(toolbar);
 
         listView = (ListView) findViewById(R.id.list_view);
-        //listView.setsiz
-        latLongDistance = new LatLongDistance();
+
+        LatLongDistanceComponent component = DaggerLatLongDistanceComponent.create();
+        latLongDistance = component.getLatLongDistance();
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -96,7 +94,6 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
 
     @Override
     public void showCities(List<City> cityList) {
-        //List<String> cityArrayList = new ArrayList<String>();
         ArrayList<ListElementCity> cityElementArrayList = new ArrayList<>();
 
         for (City city: cityList
@@ -108,7 +105,7 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
             listElementCity.setName(city.getName());
             listElementCity.setCountry(city.getCountry());
             listElementCity.setDistance(value.round(MathContext.DECIMAL32));
-            listElementCity.setImage(selectCountryImage(city.getCountry()));
+            listElementCity.setImage(CountrySelector.selectCountryImage(city.getCountry()));
 
             cityElementArrayList.add(listElementCity);
         }
@@ -121,65 +118,5 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
     @Override
     public Double calculateDistances(Double latitude, Double longitude) {
         return latLongDistance.calculateDistance(selfLatitude, selfLongitude, latitude, longitude);
-    }
-
-    private int selectCountryImage(String country){
-        int ret = 0;
-
-        switch(country) {
-            case "United States":
-                // code block
-                ret = R.drawable.us;
-                break;
-            case "Hungary":
-                // code block
-                ret = R.drawable.hu;
-                break;
-            case "Norway":
-                // code block
-                ret = R.drawable.no;
-                break;
-            case "Germany":
-                // code block
-                ret = R.drawable.de;
-                break;
-            case "Russia":
-                // code block
-                ret = R.drawable.ru;
-                break;
-            case "India":
-                // code block
-                ret = R.drawable.in;
-                break;
-            case "Netherlands":
-                // code block
-                ret = R.drawable.ne;
-                break;
-            case "Mexico":
-                // code block
-                ret = R.drawable.mx;
-                break;
-            case "Austria":
-                // code block
-                ret = R.drawable.at;
-                break;
-            case "Spain":
-                // code block
-                ret = R.drawable.es;
-                break;
-            case "Japan":
-                // code block
-                ret = R.drawable.ja;
-                break;
-            case "Poland":
-                // code block
-                ret = R.drawable.pl;
-                break;
-            default:
-                ret = R.drawable.hu;
-                // code block
-        }
-
-        return ret;
     }
 }

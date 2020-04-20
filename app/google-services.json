@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "317885072801",
+    "firebase_url": "https://mobilszoft-1064c.firebaseio.com",
+    "project_id": "mobilszoft-1064c",
+    "storage_bucket": "mobilszoft-1064c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317885072801:android:921cf73fa7f804d971b7e0",
+        "android_client_info": {
+          "package_name": "com.example.mobilszoft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317885072801-p4ues3t6s80vefgeshhue51fur0cs773.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-5lLYq2RZQap7Ecx5gp_9v0ahzkt6ZYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317885072801-p4ues3t6s80vefgeshhue51fur0cs773.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

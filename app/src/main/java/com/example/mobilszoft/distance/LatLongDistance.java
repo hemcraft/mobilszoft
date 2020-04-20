@@ -1,8 +1,13 @@
 package com.example.mobilszoft.distance;
 
+import javax.inject.Inject;
+
 public class LatLongDistance {
 
     public final static double AVERAGE_RADIUS_OF_EARTH = 6371;
+
+    @Inject
+    public LatLongDistance() {}
 
     public double calculateDistance(double userLat, double userLng, double venueLat, double venueLng) {
 
