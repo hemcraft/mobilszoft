@@ -15,6 +15,7 @@ import com.example.mobilszoft.distance.LatLongDistanceComponent;
 import com.example.mobilszoft.model.CustomAdapter;
 import com.example.mobilszoft.model.ListElementCity;
 import com.example.mobilszoft.selector.CountrySelector;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,12 +43,15 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
     private double selfLongitude;
     private double selfLatitude;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cities);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         listView = (ListView) findViewById(R.id.list_view);
 
@@ -65,6 +69,9 @@ public class CitiesActivity extends AppCompatActivity implements CitiesView {
             selfLongitude = location.getLongitude();
             selfLatitude = location.getLatitude();
         }
+
+        //Crashlytics
+        //throw null;
     }
 
     @Override
